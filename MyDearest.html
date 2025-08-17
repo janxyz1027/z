@@ -6,24 +6,45 @@
   <title>Noah's Letter - The Notebook</title>
   <style>
     body {
-      background: #0d0d0d;
-      color: #f5f5f5;
-      font-family: "Georgia", serif;
+      margin: 0;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
+      font-family: "Georgia", serif;
+      color: #f5f5f5;
+      text-align: center;
+
+      /* Background image */
+      background: url("lastus.jpg") no-repeat center center/cover;
+      position: relative;
     }
+
+    /* Dark overlay for readability */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.55); /* adjust darkness */
+      z-index: 0;
+    }
+
     #text {
       font-size: 1.5rem;
       width: 80%;
-      text-align: center;
       min-height: 100px;
+      position: relative;
+      z-index: 1; /* text stays above overlay */
     }
+
     audio {
       margin-top: 20px;
+      position: relative;
+      z-index: 1; /* audio controls above overlay */
     }
   </style>
 </head>
@@ -59,7 +80,7 @@
     function typeWriter(line, i = 0) {
       if (i < line.length) {
         textDiv.innerHTML = line.substring(0, i + 1);
-        setTimeout(() => typeWriter(line, i + 1), 25); // mas mabilis
+        setTimeout(() => typeWriter(line, i + 1), 25); // typing speed
       }
     }
 
