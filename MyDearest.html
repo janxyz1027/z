@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noah's Letter - The Notebook</title>
+  <style>
+    body {
+      background: #0d0d0d;
+      color: #f5f5f5;
+      font-family: "Georgia", serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #text {
+      font-size: 1.5rem;
+      width: 80%;
+      text-align: center;
+      min-height: 100px;
+    }
+    audio {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="text">Click the play button</div>
+  <audio id="audio" controls>
+    <source src="noah_letter.mp4" type="video/mp4">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const script = [
+      { time: 0, text: "My Dearest Max." },
+      { time: 2.07, text: "I couldn't sleep last night because I know that it's over between us." },
+      { time: 7.16, text: "I'm not bitter anymore, because I know that what we had was real." },
+      { time: 12.18, text: "And if in some distant place in the future we see each other in our new lives," },
+      { time: 17.12, text: "I'll smile at you with joy and remember how we spent the summer beneath the trees," },
+      { time: 23.05, text: "learning from each other and growing in love." },
+      { time: 28.01, text: "The best love is the kind that awakens the soul and makes us reach for more," },
+      { time: 34.01, text: "that plants a fire in our hearts and brings peace to our minds," },
+      { time: 39.03, text: "and that's what you've given me." },
+      { time: 42.07, text: "That's what I hope to give to you forever." },
+      { time: 47.05, text: "I love you." },
+      { time: 48.04, text: "I'll be seeing you." },
+      { time: 49.19, text: "-Noah" },
+    ];
+
+    const audio = document.getElementById("audio");
+    const textDiv = document.getElementById("text");
+
+    let currentLine = -1;
+
+    function typeWriter(line, i = 0) {
+      if (i < line.length) {
+        textDiv.innerHTML = line.substring(0, i + 1);
+        setTimeout(() => typeWriter(line, i + 1), 25); // mas mabilis
+      }
+    }
+
+    audio.ontimeupdate = () => {
+      const index = script.findIndex(
+        (line, i) =>
+          audio.currentTime >= line.time &&
+          (i === script.length - 1 || audio.currentTime < script[i + 1].time)
+      );
+
+      if (index !== -1 && index !== currentLine) {
+        currentLine = index;
+        typeWriter(script[index].text);
+      }
+    };
+  </script>
+</body>
+</html>
